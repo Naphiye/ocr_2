@@ -8,9 +8,11 @@ async function init() {
 		const works = await getWorks();
 		console.log(works);
 		displayWorks(works);
-
+		
 		const categories = await getCategories();
 		displayFilters(categories, works);
+		
+		//displaymodal + hide en css 
 	} catch (error) {
 		console.error(error);
 		displayGalleryError("Impossible de charger les projets pour le moment.");

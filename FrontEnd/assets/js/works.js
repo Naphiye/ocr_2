@@ -3,7 +3,11 @@
 // Élément HTML qui va contenir les projets
 const gallery = document.querySelector(".gallery");
 
-// Crée la balise <figure> d'un projet (image + légende)
+/**
+ * creer les figures html de la galerie
+ * @param {object} work 
+ * @returns figure html
+ */
 function createWorkFigure(work) {
 	const figure = document.createElement("figure");
 
@@ -19,15 +23,22 @@ function createWorkFigure(work) {
 	return figure;
 }
 
-// Affiche une liste de projets dans la galerie
+/**
+ * 
+ * @param {*} worksToDisplay 
+ */
 export function displayWorks(worksToDisplay) {
 	gallery.innerHTML = ""; // on vide la galerie avant de la remplir
-	for (const work of worksToDisplay) {
+	for  (const work of worksToDisplay) {
 		gallery.appendChild(createWorkFigure(work));
 	}
 }
 
-// Affiche un message à la place de la galerie (ex : API injoignable)
+/**
+ * Affichage du message d'erreur
+ * @param {string} message 
+ * 
+ */
 export function displayGalleryError(message) {
 	gallery.textContent = message;
 }
