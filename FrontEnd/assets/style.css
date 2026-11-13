@@ -276,3 +276,45 @@ footer nav ul {
 	margin-bottom: 45px;
 }
 
+/* Miniatures des works dans la modale */
+.modal-gallery {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 9px;
+	padding-bottom: 45px;
+	border-bottom: 1px solid #B3B3B3;
+}
+
+.modal-figure {
+	position: relative;
+}
+
+.modal-figure img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	object-fit: cover;
+}
+
+/* Bouton poubelle en haut à droite de chaque miniature */
+.modal-delete {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 17px;
+	height: 17px;
+	padding: 0;
+	color: white;
+	background-color: black;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.modal-delete:hover {
+	background-color: var(--main-color);
+}
+

@@ -1,7 +1,7 @@
 import { getWorks, getCategories } from "./api.js";
 import { displayWorks, displayGalleryError } from "./works.js";
 import { displayFilters } from "./categories.js";
-import { createModal } from "./modal.js";
+import { createModal, displayModalWorks, openModal } from "./modal.js";
 
 
 /* TO DO 
@@ -46,6 +46,8 @@ async function init() {
 		
 		// Modale créée cachée, elle sera ouverte par le bouton "modifier"
 		createModal();
+		displayModalWorks(works);
+		openModal(); // TEMPORAIRE : modale ouverte au chargement tant qu'on travaille dessus
 	} catch (error) {
 		console.error(error);
 		displayGalleryError("Impossible de charger les projets pour le moment.");
