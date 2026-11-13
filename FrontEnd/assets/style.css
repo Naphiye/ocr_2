@@ -47,6 +47,11 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+:root {
+	--main-color: #1D6154;
+	--color-text: #3D3D3D;
+}
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -82,7 +87,7 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: var(--main-color)
 }
 nav ul {
 	display: flex;
@@ -135,7 +140,45 @@ li:hover {
 
 .gallery img {
 	width: 100%;
+	display: block;
+}
 
+/* Titre sous chaque projet de la galerie */
+.gallery figcaption {
+	margin-top: 7px;
+	font-family: 'Work Sans';
+	font-size: 13px;
+	line-height: 1.3;
+	color: var(--color-text);
+}
+
+/* Filtres de la galerie (générés par categories.js) */
+.filters {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 50px;
+}
+
+.filter-btn {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	color: var(--main-color);
+	background-color: white;
+	border: 1px solid var(--main-color);
+	border-radius: 60px;
+	padding: 9px 25px;
+	cursor: pointer;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+/* Survol et bouton sélectionné : fond vert, texte blanc */
+.filter-btn:hover,
+.filter-btn.active {
+	background-color: var(--main-color);
+	color: white;
 }
 #contact {
 	width: 50%;
@@ -173,7 +216,7 @@ input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	background-color: var(--main-color);
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
