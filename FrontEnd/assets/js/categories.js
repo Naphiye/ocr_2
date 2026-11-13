@@ -1,9 +1,8 @@
-// Filtres de la galerie par catégorie
 import {displayWorks} from './works.js';
 
 
 /**
- * creer un bouton htnl avec le texte label 
+ * creer un bouton html avec le texte label 
  * initialise sont event click :  prend la classe active  et enleve la classe active des autres boutons 
  * event click : regarde la categorieId du bouton passe en param et affiche les works ou la categorie id est egal a celle du bouton 
  * si category id null affiche tous les works 
