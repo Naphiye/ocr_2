@@ -1,8 +1,14 @@
-// Point d'entrée de la page d'accueil : charge les données puis lance l'affichage
 import { getWorks, getCategories } from "./api.js";
 import { displayWorks, displayGalleryError } from "./works.js";
 import { displayFilters } from "./categories.js";
 
+
+/**
+ * recupere les works
+ * affiche les works
+ * recupere les categories
+ * creer et affiche les boutons filtres qui permettent de trier les categories a afficher
+ */
 async function init() {
 	try {
 		const works = await getWorks();
@@ -10,6 +16,7 @@ async function init() {
 		displayWorks(works);
 		
 		const categories = await getCategories();
+		console.log(categories);
 		displayFilters(categories, works);
 		
 		//displaymodal + hide en css 

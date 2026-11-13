@@ -1,44 +1,63 @@
 // Filtres de la galerie par catégorie
-import { displayWorks } from "./works.js";
+import {displayWorks} from './works.js';
 
-// Crée un bouton de filtre.
-// categoryId vaut null pour le bouton "Tous".
-// works = la liste complète des projets, déjà chargée.
+
+/**
+ * creer un bouton htnl avec le texte label 
+ * initialise sont event click :  prend la classe active  et enleve la classe active des autres boutons 
+ * event click : regarde la categorieId du bouton passe en param et affiche les works ou la categorie id est egal a celle du bouton 
+ * si category id null affiche tous les works 
+ * affiche les works avec fonction displayWorks 
+ * @param {string} label 
+ * @param {int} categoryId 
+ * @param {object array} works 
+ * @returns 
+ */
 function createFilterButton(label, categoryId, works) {
-	const button = document.createElement("button");
-	button.type = "button";
-	button.textContent = label;
-	button.classList.add("filter-btn");
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = label;
+  button.classList.add('filter-btn');
 
-	button.addEventListener("click", () => {
-		// Le bouton cliqué devient le seul bouton actif
-		document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
-		button.classList.add("active");
+  button.addEventListener('click', () => {
+    // Le bouton cliqué devient le seul bouton actif
+    document.querySelectorAll('.filter-btn')
+        .forEach((btn) => btn.classList.remove('active'));
+    button.classList.add('active');
 
-		// On filtre la liste déjà en mémoire : pas de nouvel appel à l'API
-		if (categoryId === null) {
-			displayWorks(works);
-		} else {
-			const filteredWorks = works.filter((work) => work.categoryId === categoryId);
-			displayWorks(filteredWorks);
-		}
-	});
+    if (categoryId === null) {
+      displayWorks(works);
+    } else {
+      const filteredWorks =
+          works.filter((work) => work.categoryId === categoryId);
+      displayWorks(filteredWorks);
+    }
+  });
 
-	return button;
+  return button;
 }
 
-// Crée la barre de filtres et la place juste avant la galerie
+
+
+/**
+ * creer et affiche des boutons :
+ *  tous pour toutes les categories puis un bouton par categorie
+ * bouons creer avec la fonction createfilterbutton
+ * insere element html filtres avec les boutons  avant l'element gallery 
+ * @param {object id name} categories
+ * @param {object category categoryId id imageUrl titleuserId} works
+ */
 export function displayFilters(categories, works) {
-	const filters = document.createElement("div");
-	filters.classList.add("filters");
+  const filters = document.createElement('div');
+  filters.classList.add('filters');
 
-	const allButton = createFilterButton("Tous", null, works);
-	allButton.classList.add("active"); // au chargement, tout est affiché
-	filters.appendChild(allButton);
+  const allButton = createFilterButton('Tous', null, works);
+  allButton.classList.add('active');  // au chargement, tout est affiché
+  filters.appendChild(allButton);
 
-	for (const category of categories) {
-		filters.appendChild(createFilterButton(category.name, category.id, works));
-	}
+  for (const category of categories) {
+    filters.appendChild(createFilterButton(category.name, category.id, works));
+  }
 
-	document.querySelector(".gallery").before(filters);
+  document.querySelector('.gallery').before(filters);
 }

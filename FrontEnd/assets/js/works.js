@@ -1,10 +1,9 @@
-// Affichage des projets dans la galerie
 
 // Élément HTML qui va contenir les projets
 const gallery = document.querySelector(".gallery");
 
 /**
- * creer les figures html de la galerie
+ * creer les figures html de la galerie avec une image un titre en enfant 
  * @param {object} work 
  * @returns figure html
  */
@@ -24,11 +23,12 @@ function createWorkFigure(work) {
 }
 
 /**
- * 
- * @param {*} worksToDisplay 
+ * vide la galerie avant de la remplir
+ * rempli la galerie en appelant createWorkfigure pour creer chaque figure a display
+ * @param {object} worksToDisplay 
  */
 export function displayWorks(worksToDisplay) {
-	gallery.innerHTML = ""; // on vide la galerie avant de la remplir
+	gallery.innerHTML = ""; 
 	for  (const work of worksToDisplay) {
 		gallery.appendChild(createWorkFigure(work));
 	}
