@@ -8,18 +8,11 @@ const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png"];
 const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png"];
 
-const IMAGE_ICON = `
-	<svg viewBox="0 0 24 24" width="68" height="60" fill="currentColor" aria-hidden="true">
-		<path d="M21 3H3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 13.6-4.3-4.3a1 1 0 0 0-1.4 0L11 15.6l-2.3-2.3a1 1 0 0 0-1.4 0L4 16.6V5h16v11.6zM8.5 10.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-	</svg>`;
-
-
-
 /**
- * creer la modale "Mes projets" et l'ajoute a la fin du body
- * la modale est cachee par defaut (css), on l'affiche avec openModal
- * contient : bouton fermer, titre "Galerie photo", zone vide pour les miniatures des works
- * initialise la fermeture : clic sur la croix, clic en dehors de la fenetre, touche Echap
+ * Crée la modale et l'ajoute à la fin de la page. Elle est cachée au départ.
+ * Elle contient deux vues : la galerie photo et le formulaire d'ajout photo.
+ * On la ferme avec la croix, en cliquant à côté ou avec la touche Échap.
+ * @param {object[]} categories les catégories, pour la liste du formulaire
  */
 export function createModal(categories) {
 	modal = document.createElement("aside");
@@ -73,6 +66,10 @@ export function createModal(categories) {
 
 
 
+/**
+ * Crée la vue galerie : le titre, les miniatures et le bouton "Ajouter une photo".
+ * @returns {HTMLElement} la vue
+ */
 function createGalleryView() {
 	const view = document.createElement("div");
 	view.classList.add("modal-view--gallery");
@@ -100,6 +97,12 @@ function createGalleryView() {
 
 
 
+/**
+ * Crée la vue ajout photo : la zone pour choisir l'image, le titre,
+ * la catégorie et le bouton Valider.
+ * @param {object[]} categories les catégories proposées dans la liste
+ * @returns {HTMLElement} la vue
+ */
 function createAddView(categories) {
 	const view = document.createElement("div");
 	view.classList.add("modal-view--add");
@@ -110,7 +113,7 @@ function createAddView(categories) {
 		<form class="add-form">
 			<label class="upload-zone" for="photo-file">
 				<span class="upload-placeholder">
-					${IMAGE_ICON}
+					<img src="./assets/icons/upload.png" alt="">
 					<span class="upload-btn">+ Ajouter photo</span>
 					<span class="upload-info">jpg, png : 4mo max</span>
 				</span>
@@ -138,6 +141,11 @@ function createAddView(categories) {
 
 
 
+/**
+ * Vérifie que le fichier choisi est un jpg ou un png de 4 Mo maximum.
+ * @param {File} file le fichier choisi
+ * @returns {string} le message d'erreur, ou "" si le fichier est bon
+ */
 function checkFile(file) {
 	const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
 	if (!ALLOWED_TYPES.includes(file.type) || !ALLOWED_EXTENSIONS.includes(extension)) {
@@ -151,6 +159,12 @@ function checkFile(file) {
 
 
 
+/**
+ * Fait fonctionner le formulaire d'ajout photo :
+ * aperçu de l'image, bouton Valider bloqué tant qu'il manque quelque chose,
+ * puis envoi du projet et ajout dans la galerie et dans la modale.
+ * @param {HTMLFormElement} form le formulaire
+ */
 function initAddForm(form) {
 	const fileInput = form.querySelector("#photo-file");
 	const titleInput = form.querySelector("#photo-title");
@@ -211,6 +225,9 @@ function initAddForm(form) {
 
 
 
+/**
+ * Vide le formulaire d'ajout photo : champs, aperçu et message d'erreur.
+ */
 function resetAddForm() {
 	const form = modal.querySelector(".add-form");
 	form.reset();
@@ -222,6 +239,9 @@ function resetAddForm() {
 
 
 
+/**
+ * Affiche la vue galerie (et vide le formulaire d'ajout au passage).
+ */
 function showGalleryView() {
 	modal.querySelector(".modal-view--gallery").hidden = false;
 	modal.querySelector(".modal-view--add").hidden = true;
@@ -231,6 +251,9 @@ function showGalleryView() {
 
 
 
+/**
+ * Affiche la vue ajout photo, avec la flèche retour.
+ */
 function showAddView() {
 	modal.querySelector(".modal-view--gallery").hidden = true;
 	modal.querySelector(".modal-view--add").hidden = false;
@@ -240,10 +263,11 @@ function showAddView() {
 
 
 /**
- * creer une miniature html pour la modale : image du work + bouton poubelle en haut a droite
- * l'id du work est stocke sur le bouton (data-id) pour appeler la route delete plus tard
- * @param {object} work
- * @returns figure html
+ * Crée la miniature d'un projet dans la modale, avec sa poubelle.
+ * Au clic sur la poubelle, le projet est supprimé de l'API, de la modale
+ * et de la galerie.
+ * @param {object} work le projet
+ * @returns {HTMLElement} la miniature
  */
 function createModalFigure(work) {
 	const figure = document.createElement("figure");
@@ -278,8 +302,8 @@ function createModalFigure(work) {
 
 
 /**
- * vide la galerie de la modale puis affiche une miniature par work
- * @param {object array} works
+ * Vide la galerie de la modale puis affiche une miniature par projet.
+ * @param {object[]} works les projets
  */
 export function displayModalWorks(works) {
 	const modalGallery = modal.querySelector(".modal-gallery");
@@ -292,7 +316,7 @@ export function displayModalWorks(works) {
 
 
 /**
- * affiche la modale
+ * Ouvre la modale, toujours sur la vue galerie.
  */
 export function openModal() {
 	showGalleryView();
@@ -302,6 +326,10 @@ export function openModal() {
 
 
 
+/**
+ * Affiche le bouton "modifier" à côté du titre "Mes Projets".
+ * Au clic, il ouvre la modale.
+ */
 export function displayEditButton() {
 	const editButton = document.createElement("button");
 	editButton.type = "button";
@@ -315,7 +343,7 @@ export function displayEditButton() {
 
 
 /**
- * cache la modale
+ * Ferme la modale.
  */
 export function closeModal() {
 	modal.classList.remove("modal--open");

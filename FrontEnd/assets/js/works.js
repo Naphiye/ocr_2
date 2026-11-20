@@ -1,11 +1,10 @@
-
 // Élément HTML qui va contenir les projets
 const gallery = document.querySelector(".gallery");
 
 /**
- * creer les figures html de la galerie avec une image un titre en enfant 
- * @param {object} work 
- * @returns figure html
+ * Crée la figure d'un projet : son image et son titre en dessous.
+ * @param {object} work le projet
+ * @returns {HTMLElement} la figure
  */
 function createWorkFigure(work) {
 	const figure = document.createElement("figure");
@@ -24,9 +23,8 @@ function createWorkFigure(work) {
 }
 
 /**
- * vide la galerie avant de la remplir
- * rempli la galerie en appelant createWorkfigure pour creer chaque figure a display
- * @param {object} worksToDisplay 
+ * Vide la galerie puis y affiche les projets donnés.
+ * @param {object[]} worksToDisplay les projets à afficher
  */
 export function displayWorks(worksToDisplay) {
 	gallery.innerHTML = ""; 
@@ -36,14 +34,17 @@ export function displayWorks(worksToDisplay) {
 }
 
 /**
- * Affichage du message d'erreur
- * @param {string} message 
- * 
+ * Affiche un message d'erreur à la place de la galerie.
+ * @param {string} message
  */
 export function displayGalleryError(message) {
 	gallery.textContent = message;
 }
 
+/**
+ * Ajoute un projet à la fin de la galerie.
+ * @param {object} work le projet
+ */
 export function addWorkToGallery(work) {
 	gallery.appendChild(createWorkFigure(work));
 }

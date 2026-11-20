@@ -1,6 +1,11 @@
 import {login} from './api.js';
 
 
+/**
+ * Gère le formulaire de connexion.
+ * Si les identifiants sont bons : garde le token et renvoie vers l'accueil.
+ * Sinon : affiche un message d'erreur.
+ */
 function initLoginForm() {
   const form = document.querySelector('#login form');
   const errorMessage = document.querySelector('.login-error');

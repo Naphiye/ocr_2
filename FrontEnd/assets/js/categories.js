@@ -2,15 +2,13 @@ import {displayWorks} from './works.js';
 
 
 /**
- * creer un bouton html avec le texte label 
- * initialise sont event click :  prend la classe active  et enleve la classe active des autres boutons 
- * event click : regarde la categorieId du bouton passe en param et affiche les works ou la categorie id est egal a celle du bouton 
- * si category id null affiche tous les works 
- * affiche les works avec fonction displayWorks 
- * @param {string} label 
- * @param {int} categoryId 
- * @param {object array} works 
- * @returns 
+ * Crée un bouton filtre.
+ * Au clic, il devient le bouton actif et la galerie n'affiche plus que les
+ * projets de sa catégorie (ou tous les projets si categoryId vaut null).
+ * @param {string} label le texte du bouton
+ * @param {number|null} categoryId l'id de la catégorie, null pour "Tous"
+ * @param {object[]} works tous les projets
+ * @returns {HTMLButtonElement} le bouton
  */
 function createFilterButton(label, categoryId, works) {
   const button = document.createElement('button');
@@ -39,12 +37,10 @@ function createFilterButton(label, categoryId, works) {
 
 
 /**
- * creer et affiche des boutons :
- *  tous pour toutes les categories puis un bouton par categorie
- * bouons creer avec la fonction createfilterbutton
- * insere element html filtres avec les boutons  avant l'element gallery 
- * @param {object id name} categories
- * @param {object category categoryId id imageUrl titleuserId} works
+ * Affiche les filtres au-dessus de la galerie :
+ * un bouton "Tous" puis un bouton par catégorie.
+ * @param {object[]} categories les catégories
+ * @param {object[]} works tous les projets
  */
 export function displayFilters(categories, works) {
   const filters = document.createElement('div');
