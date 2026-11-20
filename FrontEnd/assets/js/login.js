@@ -15,8 +15,7 @@ function initLoginForm() {
     try {
       const data = await login(email, password);
       // localStorage : le token reste après fermeture du navigateur (24h côté API).
-      // sessionStorage (effacé à la fermeture de l'onglet) serait plutôt pour des
-      // usages plus sécurisés, où l'on ne veut pas que la session survive.
+      // sessionStorage (effacé à la fermeture de l'onglet) serait plutôt pour des usages plus sécurisés, où l'on ne veut pas que la session survive.
       localStorage.setItem('token', data.token);
       window.location.href = './index.html';
     } catch (error) {

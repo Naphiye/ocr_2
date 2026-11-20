@@ -61,14 +61,6 @@ export function createModal() {
 
 
 
-// Icône poubelle en SVG (pas besoin de fichier ni de librairie d'icônes)
-const TRASH_ICON = `
-	<svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden="true">
-		<path d="M9 2h6l1 2h5v2H3V4h5l1-2zM5 8h14l-1.2 14H6.2L5 8zm4 3v8h2v-8H9zm4 0v8h2v-8h-2z"/>
-	</svg>`;
-
-
-
 /**
  * creer une miniature html pour la modale : image du work + bouton poubelle en haut a droite
  * l'id du work est stocke sur le bouton (data-id) pour appeler la route delete plus tard
@@ -88,7 +80,7 @@ function createModalFigure(work) {
 	deleteButton.classList.add("modal-delete");
 	deleteButton.dataset.id = work.id;
 	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
-	deleteButton.innerHTML = TRASH_ICON;
+	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
 	// TODO : au clic, appeler la route DELETE /works/{id} (étape suivante)
 
 	figure.appendChild(img);
@@ -118,6 +110,18 @@ export function displayModalWorks(works) {
 export function openModal() {
 	modal.classList.add("modal--open");
 	modal.setAttribute("aria-hidden", "false");
+}
+
+
+
+export function displayEditButton() {
+	const editButton = document.createElement("button");
+	editButton.type = "button";
+	editButton.classList.add("edit-btn");
+	editButton.innerHTML = `<img src="./assets/icons/Vector.png" alt=""><span>modifier</span>`;
+	editButton.addEventListener("click", openModal);
+
+	document.querySelector(".portfolio-header").appendChild(editButton);
 }
 
 

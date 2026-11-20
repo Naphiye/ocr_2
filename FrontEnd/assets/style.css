@@ -138,6 +138,46 @@ nav li:hover,
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.portfolio-header {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 30px;
+}
+
+.edit-mode {
+	padding-top: 59px;
+}
+
+.edit-banner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 59px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	font-family: 'Work Sans';
+	font-size: 16px;
+	color: white;
+	background-color: black;
+}
+
+.edit-btn {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 0;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	color: black;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
 .gallery {
 	width: 100%;
 	display: grid;
@@ -371,5 +411,10 @@ footer nav ul {
 
 .modal-delete:hover {
 	background-color: var(--main-color);
+}
+
+.modal-delete img {
+	width: auto;
+	aspect-ratio: auto;
 }
 

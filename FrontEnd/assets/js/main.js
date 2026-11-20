@@ -1,6 +1,7 @@
 import {getCategories, getWorks} from './api.js';
 import {displayFilters} from './categories.js';
-import {createModal, displayModalWorks, openModal} from './modal.js';
+import {displayEditMode} from './edit-mode.js';
+import {createModal, displayEditButton, displayModalWorks} from './modal.js';
 import {displayGalleryError, displayWorks} from './works.js';
 
 
@@ -51,13 +52,17 @@ async function init() {
 
     const categories = await getCategories();
     console.log(categories);
-    displayFilters(categories, works);
 
-    // Modale créée cachée, elle sera ouverte par le bouton "modifier" donner les categories en arugemnts 
-    createModal();
-    displayModalWorks(works);
-    openModal();  // TEMPORAIRE : modale ouverte au chargement tant qu'on
-                  // travaille dessus
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Modale créée cachée, elle sera ouverte par le bouton "modifier" donner les categories en arugemnts
+      createModal();
+      displayModalWorks(works);
+      displayEditButton();
+      displayEditMode();
+    } else {
+      displayFilters(categories, works);
+    }
   } catch (error) {
     console.error(error);
     displayGalleryError('Impossible de charger les projets pour le moment.');
