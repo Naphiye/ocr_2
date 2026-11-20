@@ -30,7 +30,7 @@ export function createModal(categories) {
 	backButton.type = "button";
 	backButton.classList.add("modal-back");
 	backButton.setAttribute("aria-label", "Retour à la galerie");
-	backButton.textContent = "←";
+	backButton.innerHTML = `<img src="./assets/icons/arrow-left.png" alt="">`;
 	backButton.hidden = true;
 	backButton.addEventListener("click", showGalleryView);
 
@@ -162,7 +162,7 @@ function checkFile(file) {
 /**
  * Fait fonctionner le formulaire d'ajout photo :
  * aperçu de l'image, bouton Valider bloqué tant qu'il manque quelque chose,
- * puis envoi du projet et ajout dans la galerie et dans la modale.
+ * puis envoi du projet, ajout dans la galerie et dans la modale, et fermeture.
  * @param {HTMLFormElement} form le formulaire
  */
 function initAddForm(form) {
@@ -215,7 +215,7 @@ function initAddForm(form) {
 			const work = await addWork(formData);
 			addWorkToGallery(work);
 			modal.querySelector(".modal-gallery").appendChild(createModalFigure(work));
-			showGalleryView();
+			closeModal();
 		} catch (error) {
 			console.error(error);
 			errorMessage.textContent = "Impossible d'ajouter le projet. Reconnectez-vous puis réessayez.";

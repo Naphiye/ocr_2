@@ -98,7 +98,12 @@ nav ul {
 }
 nav li {
 	padding: 0 10px;
-	font-size: 1.2em;
+	font-size: 16px;
+}
+
+nav img {
+	display: block;
+	width: 16px;
 }
 
 nav a {
@@ -330,10 +335,6 @@ footer nav ul {
 	margin: 2em
 }
 
-footer nav li {
-	font-size: 16px;
-}
-
 /* Modale "Mes projets" (générée par modal.js) */
 .modal {
 	display: none; /* cachée par défaut */
@@ -442,9 +443,7 @@ footer nav li {
 	position: absolute;
 	top: 20px;
 	left: 25px;
-	font-size: 24px;
-	line-height: 1;
-	color: black;
+	padding: 0;
 	background: none;
 	border: none;
 	cursor: pointer;
