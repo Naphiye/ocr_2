@@ -55,7 +55,7 @@ async function init() {
 
     const token = localStorage.getItem('token');
     if (token) {
-      createModal();
+      createModal(categories);
       displayModalWorks(works);
       displayEditButton();
       displayEditMode();

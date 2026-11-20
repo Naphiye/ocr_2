@@ -54,3 +54,18 @@ export async function deleteWork(id) {
     throw new Error(`Erreur API : ${response.status}`);
   }
 }
+
+
+
+export async function addWork(formData) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${API_URL}/works`, {
+    method: 'POST',
+    headers: {Authorization: `Bearer ${token}`},
+    body: formData,
+  });
+  if (!response.ok) {
+    throw new Error(`Erreur API : ${response.status}`);
+  }
+  return response.json();
+}

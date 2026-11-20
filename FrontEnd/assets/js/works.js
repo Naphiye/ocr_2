@@ -43,3 +43,7 @@ export function displayWorks(worksToDisplay) {
 export function displayGalleryError(message) {
 	gallery.textContent = message;
 }
+
+export function addWorkToGallery(work) {
+	gallery.appendChild(createWorkFigure(work));
+}
