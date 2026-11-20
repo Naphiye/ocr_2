@@ -58,7 +58,7 @@ export async function login(email, password) {
  */
 export async function deleteWork(id) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/works/${id}`, {
+  const response = await fetch(`${API_URL}/workos/${id}`, {
     method: 'DELETE',
     headers: {Authorization: `Bearer ${token}`},
   });

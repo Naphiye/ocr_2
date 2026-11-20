@@ -291,6 +291,7 @@ function createModalFigure(work) {
 		} catch (error) {
 			console.error(error);
 			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
+			
 		}
 	});
 
