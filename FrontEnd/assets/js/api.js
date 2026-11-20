@@ -41,3 +41,16 @@ export async function login(email, password) {
   }
   return response.json();
 }
+
+
+
+export async function deleteWork(id) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${API_URL}/works/${id}`, {
+    method: 'DELETE',
+    headers: {Authorization: `Bearer ${token}`},
+  });
+  if (!response.ok) {
+    throw new Error(`Erreur API : ${response.status}`);
+  }
+}

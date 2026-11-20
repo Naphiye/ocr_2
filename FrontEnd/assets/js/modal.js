@@ -1,3 +1,5 @@
+import {deleteWork} from "./api.js";
+
 // Élément HTML de la modale (créé une seule fois par createModal)
 let modal = null;
 
@@ -81,7 +83,16 @@ function createModalFigure(work) {
 	deleteButton.dataset.id = work.id;
 	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
 	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
-	// TODO : au clic, appeler la route DELETE /works/{id} (étape suivante)
+	deleteButton.addEventListener("click", async () => {
+		try {
+			await deleteWork(work.id);
+			figure.remove();
+			document.querySelector(`.gallery figure[data-id="${work.id}"]`).remove();
+		} catch (error) {
+			console.error(error);
+			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
+		}
+	});
 
 	figure.appendChild(img);
 	figure.appendChild(deleteButton);

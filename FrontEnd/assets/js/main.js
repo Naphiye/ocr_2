@@ -55,7 +55,6 @@ async function init() {
 
     const token = localStorage.getItem('token');
     if (token) {
-      // Modale créée cachée, elle sera ouverte par le bouton "modifier" donner les categories en arugemnts
       createModal();
       displayModalWorks(works);
       displayEditButton();
