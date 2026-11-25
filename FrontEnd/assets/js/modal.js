@@ -69,7 +69,7 @@ export function createModal(categories) {
 /**
  * Ouvre la modale, toujours sur la vue galerie.
  */
-export function openModal() {
+function openModal() {
 	showGalleryView();
 	modal.classList.add("modal--open");
 	modal.setAttribute("aria-hidden", "false");
@@ -80,7 +80,7 @@ export function openModal() {
 /**
  * Ferme la modale.
  */
-export function closeModal() {
+function closeModal() {
 	modal.classList.remove("modal--open");
 	modal.setAttribute("aria-hidden", "true");
 }
@@ -166,7 +166,6 @@ function createModalFigure(work) {
 	const deleteButton = document.createElement("button");
 	deleteButton.type = "button";
 	deleteButton.classList.add("modal-delete");
-	deleteButton.dataset.id = work.id;
 	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
 	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
 	/**
@@ -188,7 +187,6 @@ function createModalFigure(work) {
 			} else {
 				alert("Serveur injoignable, réessayez plus tard.");
 			}
-
 		}
 	}
 

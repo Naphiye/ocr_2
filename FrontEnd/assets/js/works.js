@@ -27,8 +27,8 @@ function createWorkFigure(work) {
  * @param {object[]} worksToDisplay les projets à afficher
  */
 export function displayWorks(worksToDisplay) {
-	gallery.innerHTML = ""; 
-	for  (const work of worksToDisplay) {
+	gallery.innerHTML = "";
+	for (const work of worksToDisplay) {
 		gallery.appendChild(createWorkFigure(work));
 	}
 }

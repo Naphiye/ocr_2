@@ -36,5 +36,4 @@ async function init() {
 
 
 
-document.addEventListener('DOMContentLoaded', event => {init()});
-//attend que le dom soit charge  avant appel init
+document.addEventListener('DOMContentLoaded', () => {init()});
