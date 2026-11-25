@@ -67,6 +67,43 @@ export function createModal(categories) {
 
 
 /**
+ * Ouvre la modale, toujours sur la vue galerie.
+ */
+export function openModal() {
+	showGalleryView();
+	modal.classList.add("modal--open");
+	modal.setAttribute("aria-hidden", "false");
+}
+
+
+
+/**
+ * Ferme la modale.
+ */
+export function closeModal() {
+	modal.classList.remove("modal--open");
+	modal.setAttribute("aria-hidden", "true");
+}
+
+
+
+/**
+ * Affiche le bouton "modifier" à côté du titre "Mes Projets".
+ * Au clic, il ouvre la modale.
+ */
+export function displayEditButton() {
+	const editButton = document.createElement("button");
+	editButton.type = "button";
+	editButton.classList.add("edit-btn");
+	editButton.innerHTML = `<img src="./assets/icons/Vector.png" alt=""><span>modifier</span>`;
+	editButton.addEventListener("click", openModal);
+
+	document.querySelector(".portfolio-header").appendChild(editButton);
+}
+
+
+
+/**
  * Crée la vue galerie : le titre, les miniatures et le bouton "Ajouter une photo".
  * @returns {HTMLElement} la vue
  */
@@ -93,6 +130,72 @@ function createGalleryView() {
 	view.appendChild(modalGallery);
 	view.appendChild(addButton);
 	return view;
+}
+
+
+
+/**
+ * Vide la galerie de la modale puis affiche une miniature par projet.
+ * @param {object[]} works les projets
+ */
+export function displayModalWorks(works) {
+	const modalGallery = modal.querySelector(".modal-gallery");
+	modalGallery.innerHTML = "";
+	for (const work of works) {
+		modalGallery.appendChild(createModalFigure(work));
+	}
+}
+
+
+
+/**
+ * Crée la miniature d'un projet dans la modale, avec sa poubelle.
+ * Au clic sur la poubelle, le projet est supprimé de l'API, de la modale
+ * et de la galerie.
+ * @param {object} work le projet
+ * @returns {HTMLElement} la miniature
+ */
+function createModalFigure(work) {
+	const figure = document.createElement("figure");
+	figure.classList.add("modal-figure");
+
+	const img = document.createElement("img");
+	img.src = work.imageUrl;
+	img.alt = work.title;
+
+	const deleteButton = document.createElement("button");
+	deleteButton.type = "button";
+	deleteButton.classList.add("modal-delete");
+	deleteButton.dataset.id = work.id;
+	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
+	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
+	deleteButton.addEventListener("click", async () => {
+		try {
+			await deleteWork(work.id);
+			figure.remove();
+			document.querySelector(`.gallery figure[data-id="${work.id}"]`).remove();
+		} catch (error) {
+			console.error(error);
+			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
+			
+		}
+	});
+
+	figure.appendChild(img);
+	figure.appendChild(deleteButton);
+	return figure;
+}
+
+
+
+/**
+ * Affiche la vue galerie (et vide le formulaire d'ajout au passage).
+ */
+function showGalleryView() {
+	modal.querySelector(".modal-view--gallery").hidden = false;
+	modal.querySelector(".modal-view--add").hidden = true;
+	modal.querySelector(".modal-back").hidden = true;
+	resetAddForm();
 }
 
 
@@ -137,6 +240,17 @@ function createAddView(categories) {
 
 	initAddForm(view.querySelector(".add-form"));
 	return view;
+}
+
+
+
+/**
+ * Affiche la vue ajout photo, avec la flèche retour.
+ */
+function showAddView() {
+	modal.querySelector(".modal-view--gallery").hidden = true;
+	modal.querySelector(".modal-view--add").hidden = false;
+	modal.querySelector(".modal-back").hidden = false;
 }
 
 
@@ -235,118 +349,4 @@ function resetAddForm() {
 	form.querySelector(".upload-preview").removeAttribute("src");
 	form.querySelector(".add-error").textContent = "";
 	form.querySelector('input[type="submit"]').disabled = true;
-}
-
-
-
-/**
- * Affiche la vue galerie (et vide le formulaire d'ajout au passage).
- */
-function showGalleryView() {
-	modal.querySelector(".modal-view--gallery").hidden = false;
-	modal.querySelector(".modal-view--add").hidden = true;
-	modal.querySelector(".modal-back").hidden = true;
-	resetAddForm();
-}
-
-
-
-/**
- * Affiche la vue ajout photo, avec la flèche retour.
- */
-function showAddView() {
-	modal.querySelector(".modal-view--gallery").hidden = true;
-	modal.querySelector(".modal-view--add").hidden = false;
-	modal.querySelector(".modal-back").hidden = false;
-}
-
-
-
-/**
- * Crée la miniature d'un projet dans la modale, avec sa poubelle.
- * Au clic sur la poubelle, le projet est supprimé de l'API, de la modale
- * et de la galerie.
- * @param {object} work le projet
- * @returns {HTMLElement} la miniature
- */
-function createModalFigure(work) {
-	const figure = document.createElement("figure");
-	figure.classList.add("modal-figure");
-
-	const img = document.createElement("img");
-	img.src = work.imageUrl;
-	img.alt = work.title;
-
-	const deleteButton = document.createElement("button");
-	deleteButton.type = "button";
-	deleteButton.classList.add("modal-delete");
-	deleteButton.dataset.id = work.id;
-	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
-	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
-	deleteButton.addEventListener("click", async () => {
-		try {
-			await deleteWork(work.id);
-			figure.remove();
-			document.querySelector(`.gallery figure[data-id="${work.id}"]`).remove();
-		} catch (error) {
-			console.error(error);
-			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
-			
-		}
-	});
-
-	figure.appendChild(img);
-	figure.appendChild(deleteButton);
-	return figure;
-}
-
-
-
-/**
- * Vide la galerie de la modale puis affiche une miniature par projet.
- * @param {object[]} works les projets
- */
-export function displayModalWorks(works) {
-	const modalGallery = modal.querySelector(".modal-gallery");
-	modalGallery.innerHTML = "";
-	for (const work of works) {
-		modalGallery.appendChild(createModalFigure(work));
-	}
-}
-
-
-
-/**
- * Ouvre la modale, toujours sur la vue galerie.
- */
-export function openModal() {
-	showGalleryView();
-	modal.classList.add("modal--open");
-	modal.setAttribute("aria-hidden", "false");
-}
-
-
-
-/**
- * Affiche le bouton "modifier" à côté du titre "Mes Projets".
- * Au clic, il ouvre la modale.
- */
-export function displayEditButton() {
-	const editButton = document.createElement("button");
-	editButton.type = "button";
-	editButton.classList.add("edit-btn");
-	editButton.innerHTML = `<img src="./assets/icons/Vector.png" alt=""><span>modifier</span>`;
-	editButton.addEventListener("click", openModal);
-
-	document.querySelector(".portfolio-header").appendChild(editButton);
-}
-
-
-
-/**
- * Ferme la modale.
- */
-export function closeModal() {
-	modal.classList.remove("modal--open");
-	modal.setAttribute("aria-hidden", "true");
 }
