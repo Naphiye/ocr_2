@@ -169,7 +169,10 @@ function createModalFigure(work) {
 	deleteButton.dataset.id = work.id;
 	deleteButton.setAttribute("aria-label", `Supprimer ${work.title}`);
 	deleteButton.innerHTML = `<img src="./assets/icons/trash-can-solid.png" alt="">`;
-	deleteButton.addEventListener("click", async () => {
+	/**
+	 * Supprime le projet dans l'API, puis retire sa miniature et sa figure de la galerie.
+	 */
+	async function handleDelete() {
 		try {
 			await deleteWork(work.id);
 			figure.remove();
@@ -177,9 +180,11 @@ function createModalFigure(work) {
 		} catch (error) {
 			console.error(error);
 			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
-			
+
 		}
-	});
+	}
+
+	deleteButton.addEventListener("click", handleDelete);
 
 	figure.appendChild(img);
 	figure.appendChild(deleteButton);
@@ -296,7 +301,11 @@ function initAddForm(form) {
 		submitButton.disabled = !isComplete;
 	}
 
-	fileInput.addEventListener("change", () => {
+	/**
+	 * Vérifie le fichier choisi : affiche son aperçu s'il est valide,
+	 * sinon vide le champ et affiche l'erreur.
+	 */
+	function handleFileChange() {
 		errorMessage.textContent = "";
 		const file = fileInput.files[0];
 		const error = file ? checkFile(file) : "";
@@ -311,12 +320,14 @@ function initAddForm(form) {
 			uploadZone.classList.add("has-preview");
 		}
 		updateSubmitButton();
-	});
+	}
 
-	titleInput.addEventListener("input", updateSubmitButton);
-	categorySelect.addEventListener("change", updateSubmitButton);
-
-	form.addEventListener("submit", async (event) => {
+	/**
+	 * Envoie le nouveau projet à l'API, l'ajoute à la galerie et à la modale,
+	 * puis ferme la modale.
+	 * @param {SubmitEvent} event l'envoi du formulaire
+	 */
+	async function handleAddSubmit(event) {
 		event.preventDefault();
 		errorMessage.textContent = "";
 
@@ -334,7 +345,12 @@ function initAddForm(form) {
 			console.error(error);
 			errorMessage.textContent = "Impossible d'ajouter le projet. Reconnectez-vous puis réessayez.";
 		}
-	});
+	}
+
+	fileInput.addEventListener("change", handleFileChange);
+	titleInput.addEventListener("input", updateSubmitButton);
+	categorySelect.addEventListener("change", updateSubmitButton);
+	form.addEventListener("submit", handleAddSubmit);
 }
 
 

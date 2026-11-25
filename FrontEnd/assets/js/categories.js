@@ -16,7 +16,10 @@ function createFilterButton(label, categoryId, works) {
   button.textContent = label;
   button.classList.add('filter-btn');
 
-  button.addEventListener('click', () => {
+  /**
+   * Active ce bouton et affiche les projets de sa catégorie.
+   */
+  function handleFilterClick() {
     // Le bouton cliqué devient le seul bouton actif
     document.querySelectorAll('.filter-btn')
         .forEach((btn) => btn.classList.remove('active'));
@@ -29,7 +32,9 @@ function createFilterButton(label, categoryId, works) {
           works.filter((work) => work.categoryId === categoryId);
       displayWorks(filteredWorks);
     }
-  });
+  }
+
+  button.addEventListener('click', handleFilterClick);
 
   return button;
 }

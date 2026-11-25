@@ -10,7 +10,11 @@ function initLoginForm() {
   const form = document.querySelector('#login form');
   const errorMessage = document.querySelector('.login-error');
 
-  form.addEventListener('submit', async (event) => {
+  /**
+   * Envoie l'email et le mot de passe à l'API à la validation du formulaire.
+   * @param {SubmitEvent} event l'envoi du formulaire
+   */
+  async function handleLoginSubmit(event) {
     event.preventDefault();
     errorMessage.textContent = '';
 
@@ -27,7 +31,9 @@ function initLoginForm() {
       console.error(error);
       errorMessage.textContent = 'Erreur dans l’identifiant ou le mot de passe';
     }
-  });
+  }
+
+  form.addEventListener('submit', handleLoginSubmit);
 }
 
 
