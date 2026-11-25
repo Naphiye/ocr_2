@@ -179,7 +179,15 @@ function createModalFigure(work) {
 			document.querySelector(`.gallery figure[data-id="${work.id}"]`).remove();
 		} catch (error) {
 			console.error(error);
-			alert("Impossible de supprimer ce projet. Reconnectez-vous puis réessayez.");
+			if (error.status === 401) {
+				alert("Session expirée, reconnectez-vous.");
+			} else if (error.status === 404) {
+				alert("Projet introuvable : il a peut-être déjà été supprimé.");
+			} else if (error.status) {
+				alert(`Erreur du serveur (${error.status}), réessayez plus tard.`);
+			} else {
+				alert("Serveur injoignable, réessayez plus tard.");
+			}
 
 		}
 	}
@@ -293,6 +301,9 @@ function initAddForm(form) {
 	const errorMessage = form.querySelector(".add-error");
 	const submitButton = form.querySelector('input[type="submit"]');
 
+	/**
+	 * Active le bouton Valider seulement si l'image, le titre et la catégorie sont remplis.
+	 */
 	function updateSubmitButton() {
 		const isComplete =
 			fileInput.files.length > 0 &&

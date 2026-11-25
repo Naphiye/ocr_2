@@ -35,7 +35,7 @@ export function displayWorks(worksToDisplay) {
 
 /**
  * Affiche un message d'erreur à la place de la galerie.
- * @param {string} message
+ * @param {string} message le texte à afficher
  */
 export function displayGalleryError(message) {
 	gallery.textContent = message;

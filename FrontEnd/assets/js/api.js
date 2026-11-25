@@ -33,8 +33,8 @@ export async function getCategories() {
 /**
  * Connecte l'utilisateur (POST /users/login).
  * Lève une erreur si l'email ou le mot de passe est faux.
- * @param {string} email
- * @param {string} password
+ * @param {string} email l'email saisi
+ * @param {string} password le mot de passe saisi
  * @returns {Promise<object>} l'id de l'utilisateur et son token
  */
 export async function login(email, password) {
@@ -55,6 +55,7 @@ export async function login(email, password) {
  * Supprime un projet (DELETE /works/{id}).
  * Il faut être connecté : le token est envoyé dans l'en-tête Authorization.
  * @param {number} id l'id du projet à supprimer
+ * @returns {Promise<void>}
  */
 export async function deleteWork(id) {
   const token = localStorage.getItem('token');
@@ -63,7 +64,9 @@ export async function deleteWork(id) {
     headers: {Authorization: `Bearer ${token}`},
   });
   if (!response.ok) {
-    throw new Error(`Erreur API : ${response.status}`);
+    const error = new Error(`Erreur API : ${response.status}`);
+    error.status = response.status;
+    throw error;
   }
 }
 
